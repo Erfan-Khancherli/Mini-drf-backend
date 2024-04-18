@@ -45,7 +45,7 @@ I'm working on creating an real-time chat for this project.
 ```bash
 pip install -r requirements.txt
 ```
-## RUN
+## Run
 
 ```bash
 python manage.py runserver
