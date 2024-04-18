@@ -1,6 +1,6 @@
-# Mini-Drf-Project
+# Mini-Drf-Backend
 
-An example Django REST framework project.
+An example Django REST framework Backend.
 ## About
 
 I'm working on creating an real-time chat for this project.
