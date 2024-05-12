@@ -19,22 +19,19 @@ class ProfileslViewSet(APIView):
 
     def post(self, request):
         serializer = ProfilesSerializer(data = request.data)
-        if len(Profiles.objects.filter(created_by=self.request.user))>=1:
-            Profiles.objects.filter(created_by=self.request.user).update(profile_image_url=request.data['profile_image_url'])
-            if serializer.is_valid():
-                data = {
-                        "status": 200,
-                        "message": "Success",
-                        "data":"Updated"
-                        }
-                return Response(data=data, status= status.HTTP_201_CREATED,content_type='application/json')
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            if serializer.is_valid():
-                serializer.save(created_by=self.request.user)
-                return Response(serializer.data, status= status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+        if serializer.is_valid():
+            serializer.save(created_by=self.request.user)
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = ProfilesSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
         
 class ProfilesApi(generics.ListAPIView):
     # permission_classes = [
